@@ -34,6 +34,8 @@ fnDragDrop(target)
   })
 
 ```
+## demo
+  [check it out live](http://fireneslo.github.io/fn-drag-drop/demo/)
 ## Test
 ```bash
 $ npm install -g mocha

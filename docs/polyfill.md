@@ -47,6 +47,9 @@ document.getElementById('target')
 $ npm install -g mocha
 $ npm test
 ```
+## demo
+  [check it out live](http://fireneslo.github.io/fn-drag-drop/demo/polyfill)
+
 ##API
 See [fnDragDrop](../README.md)
 
