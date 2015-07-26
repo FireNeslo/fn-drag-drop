@@ -51,9 +51,9 @@ $ npm test
 * [fnDragDrop](readme.md)
 
 
-## <any fn-drag="dragging" />
+## &lt;any fn-drag="dragging" /&gt;
 attach data to drag
 
-## <any fn-drop="drop($data)" />
+## &lt;any fn-drop="drop($data)" /&gt;
 call when a element is dropped on the target
 * **any** *data* - what was dragged
