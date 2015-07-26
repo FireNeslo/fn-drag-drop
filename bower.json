@@ -1,0 +1,17 @@
+{
+  "name": "fn-drag-drop",
+  "main": "dist/fn-drag-drop.js",
+  "description": "wrapper for html5 drag and drop with the extra feature of working on mobile",
+  "version": "1.0.0",
+  "authors": [
+    "Øystein Ø. Olsen <fireneslo@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

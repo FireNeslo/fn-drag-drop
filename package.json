@@ -1,0 +1,27 @@
+{
+  "name": "fn-drag-drop",
+  "version": "1.0.0",
+  "description": "wrapper for html5 drag and drop with the extra feature of working on mobile",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mobile",
+    "drag",
+    "and",
+    "drop",
+    "html5"
+  ],
+  "author": "Øystein Ø. Olsen <fireneslo@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^11.0.0",
+    "gulp": "^3.9.0",
+    "gulp-mocha-selenium": "^1.0.0",
+    "phantomjs": "^1.9.17",
+    "selenium-webdriver": "^2.46.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}

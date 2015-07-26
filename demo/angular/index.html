@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Demo of fnDragDrop</title>
+    <link rel="stylesheet" href="../demo.css">
+  </head>
+  <body ng-app="fnDragDropDemo">
+    <header>
+      <h4>Check out the demo for</h4>
+      <nav>
+        <a href="../jquery/index.html">
+          <button>jQuery</button>
+        </a>
+        <a href="../index.html">
+          <button>VanillaJS</button>
+        </a>
+      </nav>
+    </header>
+    <main>
+      <header>
+        <h1>Demo AngularJS</h1>
+      </header>
+      <article>
+        <ul class="well" fn-drop="drop($data, source, target)">
+          <li class="item"
+            ng-repeat="item in source"
+            fn-drop="drop($data, source, target, $index)"
+            fn-drag="item">
+            <button>{{item}}</button>
+          </li>
+        </ul>
+        <ol class="well" fn-drop="drop($data, target, source)">
+          <li class="item"
+            ng-repeat="item in target"
+            fn-drop="drop($data, target, source, $index)"
+            fn-drag="item">
+            <button>{{item}}</button>
+          </li>
+        </ol>
+      </article>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="fn-drag-drop-angular.js"></script>
+    <script src="demo.js"></script>
+  </body>
+</html>
