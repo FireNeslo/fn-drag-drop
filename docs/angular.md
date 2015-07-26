@@ -46,9 +46,9 @@ $ npm test
 ##API
 
 #### also check out the docs for
-* [The jQuery wrapper](docs/jquery.md)
-* [The polyfill (experimental)](docs/polyfill.md)
-* [fnDragDrop](readme.md)
+* [The jQuery wrapper](jquery.md)
+* [The polyfill (experimental)](polyfill.md)
+* [fnDragDrop](../readme.md)
 
 
 ## &lt;any fn-drag="dragging" /&gt;
@@ -56,4 +56,4 @@ attach data to drag
 
 ## &lt;any fn-drop="drop($data)" /&gt;
 call when a element is dropped on the target
-* **any** *data* - what was dragged
+* **any** *$data* - what was dragged
