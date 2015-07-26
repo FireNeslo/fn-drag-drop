@@ -21,18 +21,22 @@ $ bower install FireNeslo/fn-drag-drop --save
 ```
 ## Usage
 ```js
-var dragging;
-
-fnDragDrop(source)
-  .drag(function dragStart() {
-    console.log('is now dragging ', dragging =  this)
+angular.module('application', ['fnDragDrop'])
+  .controller('DemoController', function($scope) {
+    $scope.dropped = []
+    $scope.drop = function(data) {
+      $scope.dropped.push(data)
+    }
   })
-
-fnDragDrop(target)
-  .drop(function dragStart() {
-    console.log('you just dropped ', dragging)
-  })
-
+```
+```html
+<section ng-controller="DemoController" ng-app="application">
+  <input ng-model="text" />
+  <button fn-drag="text">Drag me</button>
+  <ol fn-drop="dropped($data)">
+    <li ng-repeat="data in dropped"></li>
+  </ol>
+</section>
 ```
 ## Test
 ```bash
