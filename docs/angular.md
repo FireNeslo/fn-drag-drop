@@ -34,7 +34,7 @@ angular.module('application', ['fnDragDrop'])
   <input ng-model="text" />
   <button fn-drag="text">Drag me</button>
   <ol fn-drop="dropped($data)">
-    <li ng-repeat="data in dropped"></li>
+    <li ng-repeat="data in dropped">{{data}}</li>
   </ol>
 </section>
 ```
