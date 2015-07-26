@@ -42,6 +42,10 @@ document.getElementById('target')
   <ol id="target"></ol>
 </section>
 ```
+## demo
+  [check it out live](http://fireneslo.github.io/fn-drag-drop/demo/polyfill)
+
+
 ## Test
 ```bash
 $ npm install -g mocha
