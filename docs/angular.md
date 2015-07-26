@@ -48,7 +48,7 @@ $ npm test
 #### also check out the docs for
 * [The jQuery wrapper](jquery.md)
 * [The polyfill (experimental)](polyfill.md)
-* [fnDragDrop](../readme.md)
+* [fnDragDrop](../README.md)
 
 
 ## &lt;any fn-drag="dragging" /&gt;
