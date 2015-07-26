@@ -1,7 +1,7 @@
 fn-drag-drop-angular
 ===
 
-AngularJS for fnDragDrop
+AngularJS wrapper for fnDragDrop
 
 ## Install
 ### npm
