@@ -51,18 +51,9 @@ $ npm test
 * [fnDragDrop](readme.md)
 
 
-## fnDragDrop(target) -> dragDrop
-Add listeners for dragging or dropping.
+## <any fn-drag="dragging" />
+attach data to drag
 
-* **EventTarget | ArrayLike&lt;EventTarget&gt;** *target* - element(s) to drag/drop
-
-```js
-// With a regular HTMLElement
-fnDragDrop(document.getElementById('source'))
-// With a regular NodeList
-fnDragDrop(document.querySelectorAll('.item'))
-// With an array of things with addEventListener method
-fnDragDrop([window, document])
-// With a jquery wrapper
-fnDragDrop($('#target'))
-```
+## <any fn-drop="drop($data)" />
+call when a element is dropped on the target
+* **any** *data* - what was dragged
