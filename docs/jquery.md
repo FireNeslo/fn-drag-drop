@@ -1,5 +1,8 @@
 fn-drag-drop-angular
 ===
+#### also check out
+* [The AngularJS wrapper](angular.md)
+* [The polyfill (experimental)](polyfill.md)
 
 jQuery wrapper for fnDragDrop
 
@@ -54,7 +57,3 @@ $ npm test
 ```
 ##API
 See [fnDragDrop](../README.md)
-
-#### also check out the docs for
-* [The AngularJS wrapper](angular.md)
-* [The polyfill (experimental)](polyfill.md)

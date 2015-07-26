@@ -1,5 +1,9 @@
 fn-drag-drop-angular
 ===
+#### also check out
+* [The jQuery wrapper](jquery.md)
+* [The polyfill (experimental)](polyfill.md)
+* [fnDragDrop](../README.md)
 
 AngularJS wrapper for fnDragDrop
 
@@ -48,12 +52,6 @@ $ npm install -g mocha
 $ npm test
 ```
 ##API
-
-#### also check out the docs for
-* [The jQuery wrapper](jquery.md)
-* [The polyfill (experimental)](polyfill.md)
-* [fnDragDrop](../README.md)
-
 
 ## &lt;any fn-drag="dragging" /&gt;
 attach data to drag

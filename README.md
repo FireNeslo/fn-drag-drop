@@ -1,5 +1,10 @@
 fn-drag-drop
 ===
+#### also check out
+* [The AngularJS wrapper](docs/angular.md)
+* [The jQuery wrapper](docs/jquery.md)
+* [The polyfill (experimental)](docs/polyfill.md)
+
 
 Wrapper for html5 drag and drop with a nice api and with
 the added feature of working on mobile.
@@ -44,12 +49,6 @@ $ npm install -g mocha
 $ npm test
 ```
 ##API
-
-#### also check out the docs for
-* [The AngularJS wrapper](docs/angular.md)
-* [The jQuery wrapper](docs/jquery.md)
-* [The polyfill (experimental)](docs/polyfill.md)
-
 
 ## fnDragDrop(target) -> dragDrop
 Add listeners for dragging or dropping.
