@@ -120,7 +120,7 @@ function fnDragDrop($q) {
   return DragAndDrop.defer.Promise = $q, DragAndDrop
 }
 
-angular.module('fnSimpleDragDrop', [])
+angular.module('fnDragDrop', [])
   .factory('fnDragDrop', ['$q', fnDragDrop])
   .directive('fnDrag', ['$rootScope', 'fnDragDrop', require('./drag')])
   .directive('fnDragOver', ['fnDragDrop', require('./over')])
@@ -321,9 +321,12 @@ var onEnd = require('./end-drop')
 var onMove= require('./drag-enter-over-leave')
 var virtual = defer()
 
+var errorThrown = null
+
 window.addEventListener('dragstart', function native(e) {
   window.removeEventListener('dragstart', native)
-  virtual.reject(new Error('Browser supports drag and drop'))
+  errorThrown = errorThrown ||
+    console.info('Browser supports drag and drop') && true
 })
 
 /*
