@@ -375,6 +375,9 @@ var api = require('../api')
  * ended or not, and remove the drag image if it has.
  */
 module.exports = function sanityCheck(touches){
+  if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
+    return;
+  }
   var touchIds = toArray(touches).map(function(touch) {
     return touch.identifier
   })
