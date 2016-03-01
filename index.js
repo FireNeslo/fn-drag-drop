@@ -1,4 +1,4 @@
-var api = module.exports = require('./lib/api')
+var api = module.exports = require('./lib')
 
 api.DragAndDrop.prototype.drag = function (callback) {
   this.elements.forEach(function(element) {

@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var api = module.exports = require('./lib/api')
+var api = module.exports = require('./lib')
 
 api.DragAndDrop.prototype.drag = function (callback) {
   this.elements.forEach(function(element) {
@@ -36,7 +36,7 @@ api.DragAndDrop.prototype.drop = function (callback) {
     }
   })
 
-},{"./lib/api":3}],2:[function(require,module,exports){
+},{"./lib":4}],2:[function(require,module,exports){
 var virtual = require('./virtual')
 
 module.exports = function addEvent(element, event, callback) {
@@ -57,28 +57,23 @@ module.exports = function addEvent(element, event, callback) {
   return this
 }
 
-},{"./virtual":12}],3:[function(require,module,exports){
-var addEvent = require('./add-event')
-var dragging = require('./state').dragging
-var toArray = Array.call.bind(Array.prototype.slice)
+},{"./virtual":14}],3:[function(require,module,exports){
+module.exports = function DragAndDelegate(selector, parent) {
+  
+}
 
-function array(value) {
-  if(Array.isArray(value)) return value
-  if('length' in value) return toArray(value)
-  return [value]
-}
-function api(element) {
-  return new DragAndDrop(element)
-}
-function DragAndDrop(element) {
-  this.using = {}
-  this.elements = array(element)
-}
-DragAndDrop.prototype.on = function(event, callback) {
-  this.elements.forEach(function(element) {
-    addEvent(element, event, callback.bind(element))
-  })
-  return this
+},{}],4:[function(require,module,exports){
+var DragAndDrop = module.exports = require('./vanilla')
+var DragAndDelegate = require('./delegated')
+var dragging = require('./state').dragging
+var addEvent = require('./add-event')
+
+function api(element, parent) {
+  if('object' === typeof element) {
+    return new DragAndDrop(element)
+  } else {
+    return new DragAndDelegate(element, parent || document)
+  }
 }
 
 api.defer = require('./util/defer')
@@ -91,7 +86,7 @@ api.dragging = dragging
 
 module.exports = api
 
-},{"./add-event":2,"./state":5,"./util/defer":6,"./util/element-at":7,"./util/observe-element":8,"./util/remove":9}],4:[function(require,module,exports){
+},{"./add-event":2,"./delegated":3,"./state":6,"./util/defer":7,"./util/element-at":8,"./util/observe-element":9,"./util/remove":10,"./vanilla":11}],5:[function(require,module,exports){
 var fnDragDrop = require('../../index')
 
 jQuery.extend(fnDragDrop.defer, {
@@ -110,12 +105,12 @@ jQuery.each(fnDragDrop.DragAndDrop.prototype, function(key) {
   }
 })
 
-},{"../../index":1}],5:[function(require,module,exports){
+},{"../../index":1}],6:[function(require,module,exports){
 module.exports = []
 module.exports.elements = []
 module.exports.dragging = []
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (global){
 function defer() {
   var Promise = defer.Promise || global.Promise
@@ -129,7 +124,7 @@ function defer() {
 module.exports = defer
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var elements = require('../state').elements
 
 module.exports = function elementAt(touch) {
@@ -146,7 +141,7 @@ module.exports = function elementAt(touch) {
   }
 }
 
-},{"../state":5}],8:[function(require,module,exports){
+},{"../state":6}],9:[function(require,module,exports){
 var elements = require('../state').elements
 
 module.exports = function observeElement(element) {
@@ -159,14 +154,36 @@ module.exports = function observeElement(element) {
   })
 }
 
-},{"../state":5}],9:[function(require,module,exports){
+},{"../state":6}],10:[function(require,module,exports){
 module.exports = function removeElement(node) {
   if(!node) return
   if(!node.parentNode) return
   node.parentNode.removeChild(node)
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
+var addEvent = require('./add-event')
+var toArray = Array.call.bind(Array.prototype.slice)
+
+function array(value) {
+  if(Array.isArray(value)) return value
+  if('length' in value) return toArray(value)
+  return [value]
+}
+function DragAndDrop(element) {
+  this.using = {}
+  this.elements = array(element)
+}
+DragAndDrop.prototype.on = function(event, callback) {
+  this.elements.forEach(function(element) {
+    addEvent(element, event, callback.bind(element))
+  })
+  return this
+}
+
+module.exports = DragAndDrop
+
+},{"./add-event":2}],12:[function(require,module,exports){
 var drags = require('../state')
 var elementAt = require('../util/element-at')
 var sanityCheck = require('./sanity-check')
@@ -219,7 +236,7 @@ module.exports = function onMove(event) {
   }
 }
 
-},{"../state":5,"../util/element-at":7,"./sanity-check":13}],11:[function(require,module,exports){
+},{"../state":6,"../util/element-at":8,"./sanity-check":15}],13:[function(require,module,exports){
 var drags = require('../state')
 
 module.exports = function onEnd(event) {
@@ -243,13 +260,13 @@ module.exports = function onEnd(event) {
   }
 }
 
-},{"../state":5}],12:[function(require,module,exports){
+},{"../state":6}],14:[function(require,module,exports){
 var observeElement = require('../util/observe-element')
 var remove = require('../util/remove')
 var defer = require('../util/defer')
 
 var drags = require('../state')
-var api = require('../api')
+var api = require('../index')
 
 var onEnd = require('./end-drop')
 var onMove= require('./drag-enter-over-leave')
@@ -298,11 +315,11 @@ window.addEventListener('touchstart', function polyfill(event){
 })
 module.exports = virtual
 
-},{"../api":3,"../state":5,"../util/defer":6,"../util/observe-element":8,"../util/remove":9,"./drag-enter-over-leave":10,"./end-drop":11}],13:[function(require,module,exports){
+},{"../index":4,"../state":6,"../util/defer":7,"../util/observe-element":9,"../util/remove":10,"./drag-enter-over-leave":12,"./end-drop":13}],15:[function(require,module,exports){
 var toArray = Array.call.bind(Array.prototype.slice)
 var remove = require('../util/remove')
 var drags = require('../state')
-var api = require('../api')
+var api = require('../index')
 /*
  * onEnd will not always fire when multitouching,
  * therefore we have to check whether a touch event that no longer exist
@@ -319,4 +336,4 @@ module.exports = function sanityCheck(touches){
   }
 }
 
-},{"../api":3,"../state":5,"../util/remove":9}]},{},[4]);
+},{"../index":4,"../state":6,"../util/remove":10}]},{},[5]);

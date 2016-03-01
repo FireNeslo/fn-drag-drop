@@ -19,7 +19,7 @@ module.exports = function addEvent(element, event, callback) {
   return this
 }
 
-},{"./virtual":14}],2:[function(require,module,exports){
+},{"./virtual":16}],2:[function(require,module,exports){
 module.exports = function fnDrag($rootScope, fnDragDrop) {
   return {
     link: function (scope, elements, attrs) {
@@ -114,7 +114,7 @@ module.exports = function($rootScope, fnDragDrop) {
 }
 
 },{}],4:[function(require,module,exports){
-var DragAndDrop = require('../api')
+var DragAndDrop = require('../index')
 
 function fnDragDrop($q) {
   return DragAndDrop.defer.Promise = $q, DragAndDrop
@@ -128,7 +128,7 @@ angular.module('fnDragDrop', [])
 
 module.exports = 'fnDragDrop'
 
-},{"../api":6,"./drag":2,"./drop":3,"./over":5}],5:[function(require,module,exports){
+},{"../index":7,"./drag":2,"./drop":3,"./over":5}],5:[function(require,module,exports){
 module.exports = function (fnDragDrop) {
   'use strict'
   return {
@@ -143,27 +143,22 @@ module.exports = function (fnDragDrop) {
 }
 
 },{}],6:[function(require,module,exports){
-var addEvent = require('./add-event')
-var dragging = require('./state').dragging
-var toArray = Array.call.bind(Array.prototype.slice)
+module.exports = function DragAndDelegate(selector, parent) {
+  
+}
 
-function array(value) {
-  if(Array.isArray(value)) return value
-  if('length' in value) return toArray(value)
-  return [value]
-}
-function api(element) {
-  return new DragAndDrop(element)
-}
-function DragAndDrop(element) {
-  this.using = {}
-  this.elements = array(element)
-}
-DragAndDrop.prototype.on = function(event, callback) {
-  this.elements.forEach(function(element) {
-    addEvent(element, event, callback.bind(element))
-  })
-  return this
+},{}],7:[function(require,module,exports){
+var DragAndDrop = module.exports = require('./vanilla')
+var DragAndDelegate = require('./delegated')
+var dragging = require('./state').dragging
+var addEvent = require('./add-event')
+
+function api(element, parent) {
+  if('object' === typeof element) {
+    return new DragAndDrop(element)
+  } else {
+    return new DragAndDelegate(element, parent || document)
+  }
 }
 
 api.defer = require('./util/defer')
@@ -176,12 +171,12 @@ api.dragging = dragging
 
 module.exports = api
 
-},{"./add-event":1,"./state":7,"./util/defer":8,"./util/element-at":9,"./util/observe-element":10,"./util/remove":11}],7:[function(require,module,exports){
+},{"./add-event":1,"./delegated":6,"./state":8,"./util/defer":9,"./util/element-at":10,"./util/observe-element":11,"./util/remove":12,"./vanilla":13}],8:[function(require,module,exports){
 module.exports = []
 module.exports.elements = []
 module.exports.dragging = []
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function (global){
 function defer() {
   var Promise = defer.Promise || global.Promise
@@ -195,7 +190,7 @@ function defer() {
 module.exports = defer
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var elements = require('../state').elements
 
 module.exports = function elementAt(touch) {
@@ -212,7 +207,7 @@ module.exports = function elementAt(touch) {
   }
 }
 
-},{"../state":7}],10:[function(require,module,exports){
+},{"../state":8}],11:[function(require,module,exports){
 var elements = require('../state').elements
 
 module.exports = function observeElement(element) {
@@ -225,14 +220,36 @@ module.exports = function observeElement(element) {
   })
 }
 
-},{"../state":7}],11:[function(require,module,exports){
+},{"../state":8}],12:[function(require,module,exports){
 module.exports = function removeElement(node) {
   if(!node) return
   if(!node.parentNode) return
   node.parentNode.removeChild(node)
 }
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
+var addEvent = require('./add-event')
+var toArray = Array.call.bind(Array.prototype.slice)
+
+function array(value) {
+  if(Array.isArray(value)) return value
+  if('length' in value) return toArray(value)
+  return [value]
+}
+function DragAndDrop(element) {
+  this.using = {}
+  this.elements = array(element)
+}
+DragAndDrop.prototype.on = function(event, callback) {
+  this.elements.forEach(function(element) {
+    addEvent(element, event, callback.bind(element))
+  })
+  return this
+}
+
+module.exports = DragAndDrop
+
+},{"./add-event":1}],14:[function(require,module,exports){
 var drags = require('../state')
 var elementAt = require('../util/element-at')
 var sanityCheck = require('./sanity-check')
@@ -285,7 +302,7 @@ module.exports = function onMove(event) {
   }
 }
 
-},{"../state":7,"../util/element-at":9,"./sanity-check":15}],13:[function(require,module,exports){
+},{"../state":8,"../util/element-at":10,"./sanity-check":17}],15:[function(require,module,exports){
 var drags = require('../state')
 
 module.exports = function onEnd(event) {
@@ -309,13 +326,13 @@ module.exports = function onEnd(event) {
   }
 }
 
-},{"../state":7}],14:[function(require,module,exports){
+},{"../state":8}],16:[function(require,module,exports){
 var observeElement = require('../util/observe-element')
 var remove = require('../util/remove')
 var defer = require('../util/defer')
 
 var drags = require('../state')
-var api = require('../api')
+var api = require('../index')
 
 var onEnd = require('./end-drop')
 var onMove= require('./drag-enter-over-leave')
@@ -364,11 +381,11 @@ window.addEventListener('touchstart', function polyfill(event){
 })
 module.exports = virtual
 
-},{"../api":6,"../state":7,"../util/defer":8,"../util/observe-element":10,"../util/remove":11,"./drag-enter-over-leave":12,"./end-drop":13}],15:[function(require,module,exports){
+},{"../index":7,"../state":8,"../util/defer":9,"../util/observe-element":11,"../util/remove":12,"./drag-enter-over-leave":14,"./end-drop":15}],17:[function(require,module,exports){
 var toArray = Array.call.bind(Array.prototype.slice)
 var remove = require('../util/remove')
 var drags = require('../state')
-var api = require('../api')
+var api = require('../index')
 /*
  * onEnd will not always fire when multitouching,
  * therefore we have to check whether a touch event that no longer exist
@@ -385,4 +402,4 @@ module.exports = function sanityCheck(touches){
   }
 }
 
-},{"../api":6,"../state":7,"../util/remove":11}]},{},[4]);
+},{"../index":7,"../state":8,"../util/remove":12}]},{},[4]);

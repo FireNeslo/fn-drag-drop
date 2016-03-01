@@ -1,4 +1,4 @@
-angular.module('fnDragDropDemo', ['fnSimpleDragDrop'])
+angular.module('fnDragDropDemo', ['fnDragDrop'])
   .directive('body', function() {
     return { controller: 'FnDragDropDemo' }
   })
