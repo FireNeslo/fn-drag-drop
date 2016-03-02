@@ -28,8 +28,6 @@ var events = [
 ]
 
 function on(node, listeners, selector) {
-  if(node.$fnDragDrop) return
-  node.$fnDragDrop = true
   listeners.forEach(function(listener) {
     if(listener[0] === 'dragstart') node.draggable = true
     addEvent(node, listener[0], listener[1])
@@ -50,6 +48,7 @@ function DragAndDelegate(selector, parent) {
     changes.forEach(function(change) {
       var nodes = parent.querySelectorAll(selector)
       for(var i = nodes.length - 1; i >= 0; i--) {
+        off(nodes[i], listeners, selector)
         on(nodes[i], listeners, selector)
       }
       nodes = change.removedNodes
@@ -68,7 +67,6 @@ DragAndDelegate.prototype.on = function(event, callback) {
   var nodes = this.parent.querySelectorAll(this.selector)
   for(var i = 0; i < nodes.length; i++) {
     if(event === 'dragstart') nodes[i].draggable = true
-    nodes[i].$fnDragDrop = true
     addEvent(nodes[i], event, callback)
   }
   return this
