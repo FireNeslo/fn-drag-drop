@@ -10,9 +10,6 @@ api.DragAndDrop.prototype.drag = function (callback) {
   })
 }
 api.DragAndDrop.prototype.drop = function (callback) {
-  this.elements.forEach(function(element) {
-    element.setAttribute('dropzone', true)
-  })
   function inihibit(e, cb) {
     e.stopPropagation()
     e.preventDefault()
@@ -28,9 +25,12 @@ api.DragAndDrop.prototype.drop = function (callback) {
     .on("dragenter", inihibit)
     .on("dragleave", inihibit)
 }
-'enter leave over end '.split(' ')
+'enter leave over end'.split(' ')
   .forEach(function shorthand(event) {
     api.DragAndDrop.prototype[event || 'move'] = function (callback) {
       return this.on('drag'+event, callback)
     }
   })
+
+api.DragAndDelegate.prototype.drop = api.DragAndDrop.prototype.drop
+

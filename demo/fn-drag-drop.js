@@ -11,9 +11,6 @@ api.DragAndDrop.prototype.drag = function (callback) {
   })
 }
 api.DragAndDrop.prototype.drop = function (callback) {
-  this.elements.forEach(function(element) {
-    element.setAttribute('dropzone', true)
-  })
   function inihibit(e, cb) {
     e.stopPropagation()
     e.preventDefault()
@@ -29,12 +26,15 @@ api.DragAndDrop.prototype.drop = function (callback) {
     .on("dragenter", inihibit)
     .on("dragleave", inihibit)
 }
-'enter leave over end '.split(' ')
+'enter leave over end'.split(' ')
   .forEach(function shorthand(event) {
     api.DragAndDrop.prototype[event || 'move'] = function (callback) {
       return this.on('drag'+event, callback)
     }
   })
+
+api.DragAndDelegate.prototype.drop = api.DragAndDrop.prototype.drop
+
 
 },{"./lib":4}],2:[function(require,module,exports){
 var virtual = require('./virtual')
@@ -58,11 +58,61 @@ module.exports = function addEvent(element, event, callback) {
 }
 
 },{"./virtual":13}],3:[function(require,module,exports){
-module.exports = function DragAndDelegate(selector, parent) {
-  
+var addEvent = require('../add-event')
+
+var events = [
+  'mousemove',
+  'touchmove'
+]
+
+function on(node, listeners, selector) {
+  listeners.forEach(function(listener) {
+    if(listener[0] === 'dragstart') node.draggable = true
+    addEvent(node, listener[0], listener[1])
+  })
 }
 
-},{}],4:[function(require,module,exports){
+function off(node, listeners, selector) {
+  listeners.forEach(function(listener) {
+    node.removeEventListener(listener[0], listener[1])
+  })
+}
+
+function DragAndDelegate(selector, parent) {
+  this.parent = parent
+  this.selector = selector
+  var listeners = this.listeners = []
+  this.observer = new MutationObserver(function(changes) {
+    changes.forEach(function(change) {
+      var nodes = change.addedNodes
+      for(var i = nodes.length - 1; i >= 0; i--) {
+        if(!(nodes[i].matches && nodes[i].matches(selector))) continue
+        on(nodes[i], listeners, selector)
+      }
+      nodes = change.removedNodes
+      for(var i = nodes.length - 1; i >= 0; i--) {
+        if(!(nodes[i].matches && nodes[i].matches(selector))) continue
+        off(nodes[i], listeners, selector)
+      }
+    })
+  })
+  this.observer.observe(parent, {childList: true, subtree: true})
+}
+
+DragAndDelegate.prototype.on = function(event, callback) {
+  this.listeners.push([event, callback])
+  var nodes = this.parent.querySelectorAll(this.selector)
+  for(var i = 0; i < nodes.length; i++) {
+    if(event === 'dragstart') nodes[i].draggable = true
+    addEvent(nodes[i], event, callback)
+  }
+  return this
+}
+
+module.exports = DragAndDelegate
+
+
+},{"../add-event":2}],4:[function(require,module,exports){
 var DragAndDrop = module.exports = require('./vanilla')
 var DragAndDelegate = require('./delegated')
 var dragging = require('./state').dragging
@@ -82,6 +132,7 @@ api.observeElement = require('./util/observe-element')
 api.removeElement = require('./util/remove')
 api.addEventToElement = addEvent
 api.DragAndDrop = DragAndDrop
+api.DragAndDelegate = DragAndDelegate
 api.dragging = dragging
 
 module.exports = api
