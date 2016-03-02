@@ -169,16 +169,16 @@ function DragAndDelegate(selector, parent) {
   var listeners = this.listeners = []
   this.observer = new MutationObserver(function(changes) {
     changes.forEach(function(change) {
-      var nodes = parent.querySelectorAll(selector)
-      for(var i = nodes.length - 1; i >= 0; i--) {
-        off(nodes[i], listeners, selector)
-        on(nodes[i], listeners, selector)
-      }
-      nodes = change.removedNodes
+      var nodes = change.removedNodes
       for(var i = nodes.length - 1; i >= 0; i--) {
         if(!(nodes[i].matches && nodes[i].matches(selector))) continue
         off(nodes[i], listeners, selector)
         delete nodes[i].$fnDragDrop
+      }
+      nodes = parent.querySelectorAll(selector)
+      for(var i = nodes.length - 1; i >= 0; i--) {
+        off(nodes[i], listeners, selector)
+        on(nodes[i], listeners, selector)
       }
     })
   })
