@@ -3,6 +3,8 @@ fn-drag-drop-polyfill
 #### also check out
 * [The jQuery wrapper](jquery.md)
 * [The AngularJS wrapper](angular.md)
+* [The delegatable API (experimental)](delegate.md)
+* [fnDragDrop](../README.md)
 
 Polyfill for html5 drag and drop
 

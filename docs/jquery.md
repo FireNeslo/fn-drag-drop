@@ -3,6 +3,8 @@ fn-drag-drop-angular
 #### also check out
 * [The AngularJS wrapper](angular.md)
 * [The polyfill (experimental)](polyfill.md)
+* [The delegatable API (experimental)](delegate.md)
+* [fnDragDrop](../README.md)
 
 jQuery wrapper for fnDragDrop
 
@@ -19,7 +21,6 @@ var fnDragDrop = require('fn-drag-drop/lib/jquery')
 $ bower install FireNeslo/fn-drag-drop --save
 ```
 ```html
-<script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/fn-drag-drop/dist/fn-drag-drop-jquery.js"></script>
 ```
 ## Usage

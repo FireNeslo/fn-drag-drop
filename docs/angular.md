@@ -3,6 +3,7 @@ fn-drag-drop-angular
 #### also check out
 * [The jQuery wrapper](jquery.md)
 * [The polyfill (experimental)](polyfill.md)
+* [The delegatable API (experimental)](delegate.md)
 * [fnDragDrop](../README.md)
 
 AngularJS wrapper for fnDragDrop
