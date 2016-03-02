@@ -106,6 +106,7 @@ DragAndDelegate.prototype.on = function(event, callback) {
   var nodes = this.parent.querySelectorAll(this.selector)
   for(var i = 0; i < nodes.length; i++) {
     if(event === 'dragstart') nodes[i].draggable = true
+    nodes[i].$fnDragDrop = true
     addEvent(nodes[i], event, callback)
   }
   return this
