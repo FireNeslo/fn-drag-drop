@@ -317,6 +317,7 @@ window.addEventListener('touchstart', function polyfill(event){
 
   virtual.dragstart = function(element, attach) {
     attach('touchstart', function(event) {
+      if(this.getAttribute('draggable') != 'true') return
       event.preventDefault()
       var touch, drag, i
       for (i = 0; i < event.changedTouches.length; i++) {
